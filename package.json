@@ -1,0 +1,17 @@
+{
+  "name": "noai-hybrid",
+  "version": "1.0.0",
+  "description": "NOAI Hybrid: private text is read by Gemini Nano on the device; the cloud model only sees placeholders.",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node serve.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "type": "module",
+  "dependencies": {
+    "firebase": "^13.4.0"
+  }
+}

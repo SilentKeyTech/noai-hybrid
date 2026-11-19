@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOAI Hybrid: private text stays on your device</title>
+<meta name="description" content="Gemini Nano reads your private text on the device. The cloud model only sees placeholders. Built with Firebase AI Logic hybrid inference.">
+<link rel="icon" href="logo.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand"><img src="logo.svg" alt="" width="34" height="34"><span>NOAI <em>Hybrid</em></span></div>
+  <div class="status"><span id="nano" class="pill">Checking Gemini Nano…</span><span id="cloud" class="pill">…</span></div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>It delivers what it cannot see.</h1>
+    <p>The AI writes the answer. NOAI hides the names before they leave your machine and puts them back when the answer returns. Gemini Nano does the private reading on your device; the cloud model only ever sees placeholders.</p>
+  </section>
+
+  <section class="panel" id="step1">
+    <div class="head"><span class="n">1</span><h2>Your text <small>stays on this device</small></h2></div>
+    <div id="samples" class="samples"></div>
+    <textarea id="raw" rows="10" placeholder="Paste an email, a medical note or a contract clause…"></textarea>
+    <div class="row">
+      <button id="hide" class="primary">Hide private details on this device</button><span id="working" class="muted"></span>
+    </div>
+  </section>
+
+  <section class="panel" id="step2" hidden>
+    <div class="head"><span class="n">2</span><h2>What the cloud would see</h2></div>
+    <div id="stats" class="stats"></div>
+    <p id="nanonote" class="muted"></p>
+    <div id="chips" class="chips"></div>
+    <pre id="out" class="out"></pre>
+    <p id="gate" class="gate"></p>
+    <div class="row ask">
+      <select id="task">
+        <option value="reply">Draft a reply</option>
+        <option value="summary">Summarise</option>
+        <option value="obligations">List obligations and deadlines</option>
+        <option value="custom">Ask something else…</option>
+      </select>
+      <input id="custom" type="text" placeholder="Your question" hidden>
+      <label class="switch"><input id="offline" type="checkbox"> Keep everything on this device</label>
+      <button id="ask" class="primary">Send placeholders to the AI</button>
+    </div>
+  </section>
+
+  <section class="panel" id="step3" hidden>
+    <div class="head"><span class="n">3</span><h2>The answer <small>real values put back on this device</small></h2><span id="where" class="pill"></span></div>
+    <div id="answer" class="answer"></div>
+    <div id="receipt" class="receipt"></div>
+    <details><summary>Exactly what left this device</summary><pre id="sent" class="out"></pre></details>
+  </section>
+
+  <p id="error" class="error" hidden></p>
+</main>
+
+<footer>
+  <p>Built with Firebase AI Logic hybrid inference: Gemini Nano on the device (<code>ONLY_ON_DEVICE</code>) for the private reading, a cloud Gemini model (<code>PREFER_IN_CLOUD</code>, falls back to Nano offline) for the writing. Silent Key Technologies. Apache-2.0.</p>
+</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
