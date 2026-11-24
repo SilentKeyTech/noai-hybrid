@@ -40,7 +40,7 @@ New in this repository: the whole web app (`public/app.js`, `index.html`, `style
 
 ## Pre-existing code (disclosed)
 
-`vendor-src/redact.ts` and `vendor-src/names.ts` are the on-device redactor from NOAI by Silent Key Technologies (Apache-2.0), written before the contest. One change was made during the contest: words such as "between" and "with" are no longer read as the start of a company name. `npm run build` turns them into `public/lib/*.js`.
+`vendor-src/redact.ts` and `vendor-src/names.ts` are the on-device redactor from NOAI by Silent Key Technologies (first published in SilentKeyTech/noai), written before the contest. Silent Key owns them and licenses this copy under AGPL-3.0 with the rest of this repo. One change was made during the contest: words such as "between" and "with" are no longer read as the start of a company name. `npm run build` turns them into `public/lib/*.js`.
 
 ## Limits
 
@@ -50,4 +50,4 @@ New in this repository: the whole web app (`public/app.js`, `index.html`, `style
 
 ## Licence
 
-Apache-2.0. All names, numbers and companies in the samples are invented.
+AGPL-3.0, see `LICENSE`. If you want to use this code in a product or service without publishing your own source, a commercial licence is available from Silent Key Technologies. All names, numbers and companies in the samples are invented.
