@@ -18,9 +18,16 @@ const cloudConfigured = Boolean(firebaseConfig.apiKey);
 
 // ---------------------------------------------------------------- Firebase
 const app = initializeApp(cloudConfigured ? firebaseConfig : { apiKey: 'on-device-only', projectId: 'on-device-only', appId: 'on-device-only' });
-if (cloudConfigured && appCheckSiteKey) {
-  if (['localhost', '127.0.0.1'].includes(location.hostname)) self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-  initializeAppCheck(app, { provider: new ReCaptchaEnterpriseProvider(appCheckSiteKey), isTokenAutoRefreshEnabled: true });
+// App Check is enforced on Firebase AI Logic. On localhost a registered debug token is used
+// (kept in public/local.js, which is not committed); elsewhere reCAPTCHA Enterprise.
+const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+let debugToken = null;
+if (isLocal) {
+  try { ({ appCheckDebugToken: debugToken } = await import('./local.js')); } catch { debugToken = null; }
+}
+if (cloudConfigured && (appCheckSiteKey || debugToken)) {
+  if (isLocal) self.FIREBASE_APPCHECK_DEBUG_TOKEN = debugToken ?? true;
+  initializeAppCheck(app, { provider: new ReCaptchaEnterpriseProvider(appCheckSiteKey || 'debug-only'), isTokenAutoRefreshEnabled: true });
 }
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 
@@ -213,16 +220,13 @@ async function ask() {
   $('#step3').hidden = false;
   const t0 = performance.now();
   try {
-    const result = await writerModel(forceDevice).generateContentStream(prompt);
-    let acc = '';
-    let source = '';
-    for await (const chunk of result.stream) {
-      acc += chunk.text();
-      source = chunk.inferenceSource ?? source;
-      $('#answer').innerHTML = restore(acc, on);
-    }
-    const final = await result.response;
-    source = final.inferenceSource ?? source;
+    // One call, not a stream: the SDK's stream reader failed mid-answer against the cloud
+    // endpoint in testing (AI/parse-failed), and the whole answer is restored at once anyway.
+    $('#answer').textContent = 'Writing…';
+    const { response: final } = await writerModel(forceDevice).generateContent(prompt);
+    const acc = final.text();
+    const source = final.inferenceSource ?? '';
+    $('#answer').innerHTML = restore(acc, on);
     const hash = await sha256(prompt);
     const ms = Math.round(performance.now() - t0);
     $('#where').dataset.src = source;

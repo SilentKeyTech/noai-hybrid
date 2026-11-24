@@ -17,7 +17,7 @@ People paste HR complaints, patient referrals and contracts into AI chat every d
 | 1. Rules hide structured identifiers and known names: emails, phones, IBANs, cards, Saudi ID and Iqama numbers, dates of birth, companies with a legal suffix, file references, names in English and Arabic | Device | none |
 | 2. Gemini Nano reads what is left and finds the names and organisations the rules missed. Every item it returns must be quoted from the text or it is ignored | Device | `getGenerativeModel(ai, { mode: InferenceMode.ONLY_ON_DEVICE, onDeviceParams: { promptOptions: { responseConstraint } } })` |
 | 3. Leak gate: the outgoing text is checked for every hidden value; one hit blocks the send | Device | none |
-| 4. The cloud model writes the reply, summary or obligations checklist on placeholders only. Offline, or with "Keep everything on this device", the same call runs on Gemini Nano | Cloud, falls back to device | `mode: InferenceMode.PREFER_IN_CLOUD`, `generateContentStream`, `response.inferenceSource` shown on screen |
+| 4. The cloud model writes the reply, summary or obligations checklist on placeholders only. Offline, or with "Keep everything on this device", the same call runs on Gemini Nano | Cloud, falls back to device | `mode: InferenceMode.PREFER_IN_CLOUD`, `generateContent`, `response.inferenceSource` shown on screen |
 | 5. Placeholders are swapped back to the real values | Device | none |
 
 The owner sees every hidden value as a chip and can click one to send it as is. The screen shows how many values stayed on the device, how many bytes left, the SHA-256 of exactly what was sent, and whether the answer was written in the cloud or on the device.
