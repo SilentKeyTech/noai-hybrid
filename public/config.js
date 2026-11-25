@@ -12,7 +12,7 @@ export const firebaseConfig = {
 
 // App Check. On localhost a debug token is used (allowed by the contest rules);
 // on the hosted demo, reCAPTCHA Enterprise with this site key.
-export const appCheckSiteKey = '';
+export const appCheckSiteKey = '6Lej6TAuAAAAAE2CK9lo1MJHl21wPkiQHcYCyDpb';
 
 // The cloud model. It only ever receives text in which private values are placeholders.
 export const cloudModelName = 'gemini-flash-lite-latest';

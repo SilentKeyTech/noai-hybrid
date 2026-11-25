@@ -1,3 +1,8 @@
 node_modules/
 .claude/
 public/local.js
+firebase-signin.cmd
+.firebase/
+signin-step*.log
+firebase-debug.log
+*.log
